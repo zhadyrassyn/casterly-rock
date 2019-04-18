@@ -1,0 +1,19 @@
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'java'
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+wrapper {
+    gradleVersion = '5.3.1'
+    distributionUrl = distributionUrl.replace("bin", "all")
+}

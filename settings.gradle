@@ -1,0 +1,3 @@
+rootProject.name = 'casterly-rock'
+include 'casterly-rock-auth'
+include 'casterly-rock-api'
