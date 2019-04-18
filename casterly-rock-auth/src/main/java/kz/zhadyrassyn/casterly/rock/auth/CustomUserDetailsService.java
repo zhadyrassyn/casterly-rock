@@ -1,5 +1,7 @@
 package kz.zhadyrassyn.casterly.rock.auth;
 
+import kz.zhadyrassyn.casterly.rock.db.User;
+import kz.zhadyrassyn.casterly.rock.db.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

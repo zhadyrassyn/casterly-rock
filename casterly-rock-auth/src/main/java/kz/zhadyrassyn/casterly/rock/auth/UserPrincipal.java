@@ -1,5 +1,6 @@
 package kz.zhadyrassyn.casterly.rock.auth;
 
+import kz.zhadyrassyn.casterly.rock.db.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

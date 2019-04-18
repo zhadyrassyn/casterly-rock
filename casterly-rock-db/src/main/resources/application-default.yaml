@@ -1,3 +1,0 @@
-jwt:
-  secret: MyCustomJwtSecretKey
-  expiration: 604800000

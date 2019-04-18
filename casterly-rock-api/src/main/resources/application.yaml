@@ -1,9 +1,6 @@
 server.port: 8080
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
-    schema: classpath:db/schema.sql
-    data: classpath:db/data.sql
-    initialization-mode: always
+  profiles:
+    active:
+      - security
+      - db
