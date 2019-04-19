@@ -1,6 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
@@ -8,10 +11,15 @@ buildscript {
     ext {
         lombokVersion = '1.18.4'
     }
+
+    dependencies {
+        classpath "gradle.plugin.org.liquibase:liquibase-gradle-plugin:2.0.1"
+    }
 }
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.liquibase.gradle"
 
 bootJar {
     mainClassName = "kz.zhadyrassyn.casterly.rock.api.Application"
@@ -20,8 +28,56 @@ bootJar {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+    runtimeOnly 'com.h2database:h2'
+
+    
+
+
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+    liquibaseRuntime 'org.liquibase:liquibase-core:3.6.1'
+    liquibaseRuntime 'postgresql:postgresql:9.1-901-1.jdbc4'
+    liquibaseRuntime 'com.h2database:h2:1.4.199'
+
+    
 }
+
+def changeLog = "$projectDir/src/main/resources/db/changelog/changelog-master.xml"
+
+task('prod') {
+    doLast {
+        println "executing prod"
+
+        liquibase {
+            activities {
+                main {
+                    changeLogFile changeLog
+                    url 'jdbc:postgresql://localhost:5432/postgres'
+                    username 'postgres'
+                    password 'postgres'
+                }
+            }
+        }   
+    }
+}
+
+task('dev') {
+    doLast {
+        println "executing dev"
+
+        liquibase {
+            activities {
+                main {
+                    changeLogFile changeLog
+                    url 'jdbc:h2:file:~/testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
+                    username 'sa'
+                    password ''
+                }
+            }
+        }
+    }
+}
+
