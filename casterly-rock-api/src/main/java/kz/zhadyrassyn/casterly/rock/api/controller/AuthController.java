@@ -1,6 +1,7 @@
 package kz.zhadyrassyn.casterly.rock.api.controller;
 
 import kz.zhadyrassyn.casterly.rock.api.payload.SigninRequest;
+import kz.zhadyrassyn.casterly.rock.api.payload.SignupRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.TokenResponse;
 import kz.zhadyrassyn.casterly.rock.api.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,4 +23,8 @@ public class AuthController {
     public TokenResponse signin(@RequestBody SigninRequest requestBody) {
         return authService.signin(requestBody);
     }
+
+
+    @PostMapping("/signup")
+    public TokenResponse signup(@RequestBody SignupRequest requestBody) { return authService.signup(requestBody); }
 }
