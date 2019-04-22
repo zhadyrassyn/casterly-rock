@@ -44,7 +44,6 @@ dependencies {
 
     liquibaseRuntime 'com.h2database:h2:1.4.199'
 
-
 }
 
 def changeLog = "$projectDir/src/main/resources/db/changelog/changelog-master.xml"

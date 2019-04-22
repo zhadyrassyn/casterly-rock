@@ -3,4 +3,4 @@ spring:
   profiles:
     active:
       - security
-      - db
+      - db-prod

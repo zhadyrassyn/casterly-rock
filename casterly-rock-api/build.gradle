@@ -5,6 +5,9 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
     }
+    ext {
+        lombokVersion = '1.18.4'
+    }
 }
 
 apply plugin: 'org.springframework.boot'
@@ -14,6 +17,11 @@ dependencies {
     compile project(':casterly-rock-auth')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     
     runtimeOnly 'org.postgresql:postgresql'
 

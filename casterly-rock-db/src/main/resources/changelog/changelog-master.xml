@@ -11,5 +11,5 @@
     <include file="./scripts/changelog.0.0.2.sql" relativeToChangelogFile="true"/>
     <include file="./scripts/changelog.0.0.3.sql" relativeToChangelogFile="true"/>
     <include file="./scripts/changelog.0.0.4.sql" relativeToChangelogFile="true"/>
-
+    <include file="./scripts/changelog.0.0.5.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
