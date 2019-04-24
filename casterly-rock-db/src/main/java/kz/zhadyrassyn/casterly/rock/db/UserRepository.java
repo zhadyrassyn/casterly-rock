@@ -1,7 +1,11 @@
 package kz.zhadyrassyn.casterly.rock.db;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class UserRepository {
@@ -16,42 +20,44 @@ public class UserRepository {
                      String password,
                      String firstName,
                      String lastName) {
+        SimpleJdbcInsert usersJdbInsert = new SimpleJdbcInsert(jdbcTemplate);
+        Map<String, Object> mapValues = new HashMap<>();
+        mapValues.put("email", email);
+        mapValues.put("password", password);
+        mapValues.put("first_name", firstName);
+        mapValues.put("last_name", lastName);
 
+        Number generatedUserId = usersJdbInsert
+                .withTableName("users")
+                .usingColumns("email", "password", "first_name", "last_name")
+                .usingGeneratedKeyColumns("id")
+                .executeAndReturnKey(mapValues);
+
+        if (generatedUserId == null) {
+            throw new RuntimeException("generatedUserId returns null after insert");
+        }
+
+        String roleQuery = "SELECT ID FROM ROLE WHERE NAME='USER'";
+        Long roleId = jdbcTemplate.queryForObject(roleQuery, Long.class);
+
+        mapValues.clear();
+        mapValues.put("users_id", generatedUserId.longValue());
+        mapValues.put("role_id", roleId);
+
+        SimpleJdbcInsert usersRoleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+
+        usersRoleJdbcInsert
+                .withTableName("users_role")
+                .usingColumns("users_id", "role_id")
+                .usingGeneratedKeyColumns("id")
+                .execute(mapValues);
 
     }
 
-    //        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-////        Map<String, Object> map = new HashMap<>();
-////        map.put("email", email);
-////        map.put("password", password);
-////        map.put("first_name", firstName);
-////        map.put("last_name", lastName);
-////        map.put("id", null);
-//
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//
-//        String insertSQL = "INSERT INTO USERS(email, password, first_name, last_name) " +
-//                "VALUES (?, ?, ?, ?)";
-//        jdbcTemplate.update(connection -> {
-//            PreparedStatement ps = connection
-//                    .prepareStatement(insertSQL);
-//            ps.setString(1, email);
-//            ps.setString(2, password);
-//            ps.setString(3, firstName);
-//            ps.setString(4, lastName);
-//            return ps;
-//        }, keyHolder);
-//
-//        Map<String, Object> keys = keyHolder.getKeys();
-//
-//        long insertedId = keyHolder;
-//        String sql = "SELECT ID FROM ROLE WHERE NAME='USER'";
-//        long roleId = jdbcTemplate.queryForObject(sql, Long.class);
-//
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("user_id", insertedId);
-//        map.put("role_id", roleId);
-//        simpleJdbcInsert
-//                .withTableName("USERS_ROLE")
-//                .execute(map);
+    public boolean isExists(String email) {
+        String sql = "SELECT COUNT(*) FROM users WHERE email=?";
+        Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class, email);
+
+        return cnt != null && cnt > 0;
+    }
 }
