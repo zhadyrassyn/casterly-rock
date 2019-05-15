@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from "react-redux";
-import { signIn } from "./actions/actions";
+import { signIn } from "../actions/actions";
 import { withRouter } from 'react-router-dom';
 
 
-class SignIn extends Component {
+class SignUp extends Component {
     constructor(props) {
         super(props);
 
@@ -36,20 +36,30 @@ class SignIn extends Component {
             [key]: value
         });
     }
-    
+
     render() {
         const { error } = this.state;
         return (
             <div>
-                <form className="sign-in-form mx-auto my-5" onSubmit={this.handleSubmit.bind(this)}>
+                <form className="sign-up-form mx-auto my-5" onSubmit={this.handleSubmit.bind(this)}>
                     <div className="form-group">
-                        <label htmlFor="sign-in-email">Email address</label>
-                        <input type="email" className="form-control" id="sign-in-email" placeholder="Enter email" name="email"
-                        onChange={this.handleInputChange.bind(this)}/>
+                        <label htmlFor="sign-up-firstName">First name</label>
+                        <input type="text" className="form-control" id="sign-up-firstName"
+                               placeholder="First name" name="firstName" onChange={this.handleInputChange.bind(this)}/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="sign-in-password">Password</label>
-                        <input type="password" className="form-control" id="sign-in-password"
+                        <label htmlFor="sign-up-lastName">Last name</label>
+                        <input type="text" className="form-control" id="sign-up-lastName"
+                               placeholder="Last name" name="lastName" onChange={this.handleInputChange.bind(this)}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="sign-up-email">Email address</label>
+                        <input type="email" className="form-control" id="sign-up-email" placeholder="Enter email" name="email"
+                               onChange={this.handleInputChange.bind(this)}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="sign-up-password">Password</label>
+                        <input type="password" className="form-control" id="sign-up-password"
                                placeholder="Password" name="password" onChange={this.handleInputChange.bind(this)}/>
                     </div>
                     <span className="text-danger d-block">{error}</span>
@@ -68,4 +78,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(SignIn));
+export default withRouter(connect(null, mapDispatchToProps)(SignUp));

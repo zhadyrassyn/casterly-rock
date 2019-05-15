@@ -22,7 +22,7 @@ class Header extends Component {
                                 <NavLink className="nav-link" exact to="signin">Sign in</NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Sign up</a>
+                                <NavLink className="nav-link" exact to="signup">Sign up</NavLink>
                             </li>
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
