@@ -5,6 +5,7 @@ import kz.zhadyrassyn.casterly.rock.api.payload.SigninRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.SignupRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.TokenResponse;
 import kz.zhadyrassyn.casterly.rock.api.service.AuthService;
+import kz.zhadyrassyn.casterly.rock.common.error.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +22,11 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public TokenResponse signin(@RequestBody SigninRequest requestBody) {
+    public TokenResponse signin(@RequestBody SigninRequest requestBody) throws Exception {
         return authService.signin(requestBody);
     }
 
 
     @PostMapping("/signup")
-    public TokenResponse signup(@RequestBody SignupRequest requestBody) throws UserAlreadyExistsException { return authService.signup(requestBody); }
+    public TokenResponse signup(@RequestBody SignupRequest requestBody) throws UserAlreadyExistsException, BadCredentialsException { return authService.signup(requestBody); }
 }

@@ -15,6 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
     compile project(':casterly-rock-auth')
+    compile project(':casterly-rock-common')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 

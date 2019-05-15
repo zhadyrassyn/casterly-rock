@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 class Header extends Component {
     render() {
         return (
             <header>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a className="navbar-brand" href="#">Logo</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -15,10 +16,10 @@ class Header extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                                <NavLink className="nav-link" to="/">Home <span className="sr-only">(current)</span></NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Sign in</a>
+                                <NavLink className="nav-link" exact to="signin">Sign in</NavLink>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Sign up</a>

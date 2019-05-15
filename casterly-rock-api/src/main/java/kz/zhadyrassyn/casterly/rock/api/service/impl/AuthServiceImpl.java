@@ -7,6 +7,7 @@ import kz.zhadyrassyn.casterly.rock.api.payload.TokenResponse;
 import kz.zhadyrassyn.casterly.rock.api.service.AuthService;
 import kz.zhadyrassyn.casterly.rock.auth.AuthenticationService;
 import kz.zhadyrassyn.casterly.rock.auth.PasswordEncoderService;
+import kz.zhadyrassyn.casterly.rock.common.error.BadCredentialsException;
 import kz.zhadyrassyn.casterly.rock.db.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenResponse signin(SigninRequest signinRequest) {
+    public TokenResponse signin(SigninRequest signinRequest) throws Exception {
+
         String jwtToken = authenticationService.authenticate(
                 signinRequest.getEmail(),
                 signinRequest.getPassword()
@@ -39,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenResponse signup(SignupRequest signupRequest) throws UserAlreadyExistsException {
+    public TokenResponse signup(SignupRequest signupRequest) throws UserAlreadyExistsException, BadCredentialsException {
         if (userRepository.isExists(signupRequest.getEmail())) {
             throw new UserAlreadyExistsException("User with email: " + signupRequest.getEmail() + " already exists");
         }

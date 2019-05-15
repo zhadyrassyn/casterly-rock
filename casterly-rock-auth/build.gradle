@@ -19,6 +19,7 @@ bootJar {
 
 dependencies {
     compile project(':casterly-rock-db')
+    compile project(':casterly-rock-common')
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
