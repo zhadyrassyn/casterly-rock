@@ -1,4 +1,4 @@
-package kz.alfabank.partner.exception;
+package kz.zhadyrassyn.casterly.rock.api.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,11 +22,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return buildResponseEntity(jsonError);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(UserAlreadyExistsException ex) {
         log.error(ex.getMessage(), ex);
 
-        ApiError jsonError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
+        ApiError jsonError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         return buildResponseEntity(jsonError);
     }
 

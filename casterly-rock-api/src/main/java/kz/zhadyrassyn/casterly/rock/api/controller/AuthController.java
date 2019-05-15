@@ -1,5 +1,6 @@
 package kz.zhadyrassyn.casterly.rock.api.controller;
 
+import kz.zhadyrassyn.casterly.rock.api.exception.UserAlreadyExistsException;
 import kz.zhadyrassyn.casterly.rock.api.payload.SigninRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.SignupRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.TokenResponse;
@@ -26,5 +27,5 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public TokenResponse signup(@RequestBody SignupRequest requestBody) { return authService.signup(requestBody); }
+    public TokenResponse signup(@RequestBody SignupRequest requestBody) throws UserAlreadyExistsException { return authService.signup(requestBody); }
 }

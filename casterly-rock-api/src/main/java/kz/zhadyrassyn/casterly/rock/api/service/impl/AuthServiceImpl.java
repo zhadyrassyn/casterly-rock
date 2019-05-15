@@ -1,5 +1,6 @@
 package kz.zhadyrassyn.casterly.rock.api.service.impl;
 
+import kz.zhadyrassyn.casterly.rock.api.exception.UserAlreadyExistsException;
 import kz.zhadyrassyn.casterly.rock.api.payload.SigninRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.SignupRequest;
 import kz.zhadyrassyn.casterly.rock.api.payload.TokenResponse;
@@ -38,7 +39,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenResponse signup(SignupRequest signupRequest) {
+    public TokenResponse signup(SignupRequest signupRequest) throws UserAlreadyExistsException {
+        if (userRepository.isExists(signupRequest.getEmail())) {
+            throw new UserAlreadyExistsException("User with email: " + signupRequest.getEmail() + " already exists");
+        }
+
         String encryptedPassword = passwordEncoderService.encode(signupRequest.getPassword());
         userRepository.save(
                 signupRequest.getEmail(),
@@ -49,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
 
         String jwtToken = authenticationService.authenticate(
                 signupRequest.getEmail(),
-                encryptedPassword
+                signupRequest.getPassword()
         );
 
         return new TokenResponse(jwtToken);

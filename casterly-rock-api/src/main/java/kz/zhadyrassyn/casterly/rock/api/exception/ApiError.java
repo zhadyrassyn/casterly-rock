@@ -1,4 +1,4 @@
-package kz.alfabank.partner.exception;
+package kz.zhadyrassyn.casterly.rock.api.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
